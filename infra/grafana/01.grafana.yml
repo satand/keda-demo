@@ -1,0 +1,31 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  namespace: keda-demo
+  labels:
+    dashboards: grafana
+    app.kubernetes.io/part-of: grafana-infra
+spec:
+  config:
+    log:
+      mode: "console"
+      level: "warn"
+    auth:
+      disable_login_form: "false"
+      disable_signout_menu: "true"
+    security:
+      admin_user: "admin"
+      admin_password: "admin"
+  dashboardLabelSelector:
+    - matchExpressions:
+        - key: app
+          operator: In
+          values:
+            - grafana
+  service:
+    name: grafana-service
+    type: ClusterIP
+    port: 3000
+  deployment:
+    replicas: 1

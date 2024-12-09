@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - 01.grafana.yml
+  - 02.service-account-prometheus.yml
+  - 03.cluster-role-binding-monitoring.yml
+  - 04.secret-service-account-token-monitoring.yml
+  - 05.grafana-datasource-monitoring.yml
+  - 06.monitoring-folder.yaml
+  - 07.route.yaml
+  - dashboards

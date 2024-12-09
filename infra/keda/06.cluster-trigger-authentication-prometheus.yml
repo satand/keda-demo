@@ -1,0 +1,14 @@
+apiVersion: keda.sh/v1alpha1
+kind: ClusterTriggerAuthentication
+metadata:
+  labels:
+    app.kubernetes.io/part-of: keda-infra
+  name: keda-prometheus-creds
+spec:
+  secretTargetRef:
+  - parameter: bearerToken
+    name: prometheus-sa-token
+    key: token
+  - parameter: ca
+    name: prometheus-sa-token
+    key: ca.crt

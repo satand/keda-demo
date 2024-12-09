@@ -1,0 +1,47 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  labels:
+    app: httpd-sample
+    app.kubernetes.io/part-of: app
+  name: httpd-sample-scaledobject
+  namespace: keda-demo
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: deployment
+    name: httpd-sample
+  pollingInterval: 10 # adjust as needed 30 sec is default
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  fallback: # Optional. Section to specify fallback options
+    failureThreshold: 3 # Mandatory if fallback section is included
+    replicas: 5 # Mandatory if fallback section is included
+  advanced: # Optional. Section to specify advanced options
+    restoreToOriginalReplicaCount: true # Optional. Default: false. It specifies whether the target resource (Deployment, StatefulSet,…) should be scaled back to original replicas count, after the ScaledObject is deleted
+    horizontalPodAutoscalerConfig:
+      # name: {name-of-hpa-resource} # Optional. Default: keda-hpa-{scaled-object-name}
+      behavior:
+        scaleUp:
+          stabilizationWindowSeconds: 30
+          policies:
+          - type: Pods
+            value: 2
+            periodSeconds: 30
+        scaleDown:
+          stabilizationWindowSeconds: 30
+          policies:
+          - type: Pods
+            value: 3
+            periodSeconds: 30
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
+      namespace: my-project
+      metricName: http_requests_total
+      threshold: '5'
+      query: sum(rate(haproxy_backend_connections_total{route="httpd-sample",exported_namespace="keda-demo"}[2m])) # Note: query must return a vector/scalar single element response
+      authModes: 'bearer'
+    authenticationRef: 
+      name: keda-prometheus-creds

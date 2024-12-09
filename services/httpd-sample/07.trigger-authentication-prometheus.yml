@@ -1,0 +1,16 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  labels:
+    app: httpd-sample
+    app.kubernetes.io/part-of: app
+  name: keda-prometheus-creds
+  namespace: keda-demo
+spec:
+  secretTargetRef:
+  - parameter: bearerToken
+    name: prometheus-sa-token
+    key: token
+  - parameter: ca
+    name: prometheus-sa-token
+    key: ca.crt

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: kafka-consumer
+    app.kubernetes.io/component: kafka-consumer
+    app.kubernetes.io/instance: kafka-consumer
+    app.kubernetes.io/part-of: kafka-app
+  name: kafka-consumer
+  namespace: keda-demo
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-tcp
+    port: 8080
+  - name: 8443-tcp
+    port: 8443
+  selector:
+    app.kubernetes.io/part-of: kafka-app
+    deployment: kafka-consumer

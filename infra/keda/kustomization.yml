@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # - 01.keda-audit-pvc.yml # Enable if you want to use the KedaController audit feature (see also KedaController configuration to enable audit section there)
+  - 02.keda-controller.yml
+  - 03.service-account-prometheus.yml
+  - 04.cluster-role-binding-service-account-prometheus.yml
+  - 05.secret-service-account-token-prometheus.yml
+  - 06.cluster-trigger-authentication-prometheus.yml  

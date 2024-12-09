@@ -1,0 +1,20 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  labels:
+    app: httpd-sample
+    app.kubernetes.io/component: httpd-sample
+    app.kubernetes.io/instance: httpd-sample
+    app.kubernetes.io/part-of: app
+  name: httpd-sample
+  namespace: keda-demo
+spec:
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: httpd-sample
+    weight: 100
+  wildcardPolicy: None

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - 01.deployment.yml
+  - 02.service.yml
+  - 03.route.yml
+  - 04.service-account-prometheus.yml
+  - 05.cluster-role-binding-service-account-prometheus.yml
+  - 06.secret-service-account-token-prometheus.yml
+  - 07.trigger-authentication-prometheus.yml
+  - 08.scaled-object-prometheus.yml

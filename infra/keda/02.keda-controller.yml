@@ -1,0 +1,54 @@
+apiVersion: keda.sh/v1alpha1
+kind: KedaController
+metadata:
+  labels:
+    app.kubernetes.io/part-of: keda-infra
+  name: keda
+  namespace: openshift-keda
+spec:
+  admissionWebhooks:
+    logEncoder: console
+    logLevel: info
+    # args: []
+    # resources:
+    #   requests:
+    #     cpu: 100m
+    #     memory: 100Mi
+    #   limits:
+    #     cpu: 1000m
+    #     memory: 1000Mi
+  metricsServer:
+    logLevel: '0'
+    # args: []
+    # resources:
+    #   requests:
+    #     cpu: 100m
+    #     memory: 100Mi
+    #   limits:
+    #     cpu: 1000m
+    #     memory: 1000Mi
+    # auditConfig: # Enable this section to enable audit feature (it needs a pvc with RWX access mode) 
+    #   logFormat: "json" 
+    #   logOutputVolumeClaim: "keda-audit-log" 
+    #   policy:
+    #     rules: 
+    #     - level: RequestResponse
+    #     # omitStages: "RequestReceived" 
+    #     # omitManagedFields: false 
+    #   lifetime: 
+    #     maxAge: "2"
+    #     maxBackup: "1"
+    #     maxSize: "50"
+  operator:
+    logEncoder: console
+    logLevel: info
+    # args: []
+    # resources:
+    #   requests:
+    #     cpu: 100m
+    #     memory: 100Mi
+    #   limits:
+    #     cpu: 1000m
+    #     memory: 1000Mi
+  watchNamespace: 
+
